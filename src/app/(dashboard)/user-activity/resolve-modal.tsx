@@ -1,4 +1,4 @@
-import { Copy, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import React from 'react';
 import { Inter } from 'next/font/google';
 import Image from 'next/image';
@@ -15,6 +15,8 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
     const [section_one, setSectionOne] = React.useState(true);
     const [section_two, setSectionTwo] = React.useState(false);
     const [section_three, setSectionThree] = React.useState(false);
+    const [selectedParticipant, setSelectedParticipant] = React.useState<string | null>(null);
+
     const participants = [
         {
             avatarSrc: "/avatar-one.png",
@@ -44,6 +46,7 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
         setSectionTwo(false)
         setSectionThree(true)
     }
+    
     return (
         <div className={`fixed inset-0 z-50 flex items-center justify-center ${inter.className} `}>
             <div className="absolute inset-0 bg-black bg-opacity-70"></div>
@@ -89,7 +92,7 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
                                 <div className='flex gap-2 flex-col'>
                                     <p className='text-[#7D89B0]'>Participants</p>
                                     <div className='grid grid-cols-2 gap-4 text-[14px]'>
-                                        {participants.map((participant, index) => (
+                                        {participants.map((participant) => (
                                             <CardParticipants
                                                 key={participant.walletAddress}
                                                 avatarSrc={participant.avatarSrc}
@@ -135,15 +138,32 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
                               <div className='flex gap-2 flex-col'>
                                     <p className='text-[#7D89B0]'>Participants</p>
                                     <div className='grid grid-cols-2 gap-4 text-[14px]'>
-                                        {participants.map((participant, index) => (
-                                            <CardParticipants
+                                        {participants.map((participant) => (
+                                            <span 
                                                 key={participant.walletAddress}
-                                                avatarSrc={participant.avatarSrc}
-                                                username={participant.username}
-                                                walletAddress={participant.walletAddress}
-                                                wagersCreated={participant.wagersCreated}
-                                                wagersJoined={participant.wagersJoined}
-                                            />
+                                                onClick={() => {
+                                                    const selectedWallet = participant.walletAddress;
+                                                    setSelectedParticipant(selectedWallet);
+                                                }}
+                                                className={`cursor-pointer py-1 rounded-[16px] flex justify-center items-center ${
+                                                    selectedParticipant === participant.walletAddress 
+                                                    ? 'bg-[#102A56]' 
+                                                    : ''
+                                                }`}
+                                            >
+                                                {
+                                                     selectedParticipant === participant.walletAddress 
+                                                     ? <Check className='absolute border rounded-full bg-[#102A56] p-[6px] mt-[-200px] ml-[240px]' width={36} height={36} color='white' /> 
+                                                     : ''
+                                                }
+                                                <CardParticipants
+                                                    avatarSrc={participant.avatarSrc}
+                                                    username={participant.username}
+                                                    walletAddress={participant.walletAddress}
+                                                    wagersCreated={participant.wagersCreated}
+                                                    wagersJoined={participant.wagersJoined}
+                                                />
+                                            </span>
                                         ))}
                                     </div>
                                 </div>
@@ -170,8 +190,8 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
                                     <p className='font-[600] text-[24px]'>Important Disclaimer</p>
                                     <p className='text-[#4A5578] font-[400] text-[18px] '>Once you close this wager nobody gets the funds.</p>
                                     <div className='flex gap-2 justify-center items-center'>
-                                        <button className='bg-[#F9F9FB] py-3 px-6 rounded-[16px]'>Cancel</button>
-                                        <button className='bg-[#E0FE10] py-3 px-6 rounded-[16px]'>Close Wager</button>
+                                        <button onClick={() => onClose()}  className='bg-[#F9F9FB] py-3 px-6 rounded-[16px]'>Cancel</button>
+                                        <button onClick={() => onClose()}  className='bg-[#E0FE10] py-3 px-6 rounded-[16px]'>Close Wager</button>
                                     </div>
                                 </div>
                             </>

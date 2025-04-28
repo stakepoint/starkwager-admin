@@ -7,7 +7,7 @@ const Page = () => {
     return (
         <div className="flex flex-col items-center justify-center text-black h-screen">
             <p className="text-black">This is the main page</p>
-            <button onClick={() => setOpen(true)}>click this button to show modal</button>
+            <button className="bg-[#102A56] px-6 py-3 rounded-[8px]" onClick={() => setOpen(true)}>View Details</button>
             {open && <ResolveDisputeModal onClose={() => setOpen(false)} /> } 
         </div>
     );

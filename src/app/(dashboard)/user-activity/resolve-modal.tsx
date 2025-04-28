@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Image from 'next/image';
 import avatarOne from "../../../../public/avatar-one.png"
 import strkLogo from "../../../../public/strk-logo.png"
+import CardParticipants from './card-participants';
 
 const inter = Inter({ subsets: ['latin'] })
 interface Props {
@@ -14,7 +15,22 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
     const [section_one, setSectionOne] = React.useState(true);
     const [section_two, setSectionTwo] = React.useState(false);
     const [section_three, setSectionThree] = React.useState(false);
-
+    const participants = [
+        {
+            avatarSrc: "/avatar-one.png",
+            username: "User1",
+            walletAddress: "0x1234...",
+            wagersCreated: 5,
+            wagersJoined: 3
+        },
+        {
+            avatarSrc: "/avatar-one.png",
+            username: "User2",
+            walletAddress: "0x5678...",
+            wagersCreated: 2,
+            wagersJoined: 7
+        }
+    ];
     const ContinueToSectionTwo = () => {
         console.log("button clicked")
         setSectionTwo(true)
@@ -73,7 +89,16 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
                                 <div className='flex gap-2 flex-col'>
                                     <p className='text-[#7D89B0]'>Participants</p>
                                     <div className='grid grid-cols-2 gap-4 text-[14px]'>
-                                       {/* where it was before */}
+                                        {participants.map((participant, index) => (
+                                            <CardParticipants
+                                                key={participant.walletAddress}
+                                                avatarSrc={participant.avatarSrc}
+                                                username={participant.username}
+                                                walletAddress={participant.walletAddress}
+                                                wagersCreated={participant.wagersCreated}
+                                                wagersJoined={participant.wagersJoined}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                                 <div className='flex gap-2 flex-col'>
@@ -107,6 +132,21 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
 
                         {section_two && (
                             <>
+                              <div className='flex gap-2 flex-col'>
+                                    <p className='text-[#7D89B0]'>Participants</p>
+                                    <div className='grid grid-cols-2 gap-4 text-[14px]'>
+                                        {participants.map((participant, index) => (
+                                            <CardParticipants
+                                                key={participant.walletAddress}
+                                                avatarSrc={participant.avatarSrc}
+                                                username={participant.username}
+                                                walletAddress={participant.walletAddress}
+                                                wagersCreated={participant.wagersCreated}
+                                                wagersJoined={participant.wagersJoined}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
                                 <div className='flex gap-2 flex-col'>
                                     <p>Reason for Resolution (Optional) </p>
                                     <input id='tell-them-why' type="text" placeholder='Tell them why ?' className='w-full h-[40px] rounded-[12px] py-6 px-3 bg-[#F9F9FB]' />

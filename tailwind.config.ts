@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: "class",
+  darkMode: ["class", "class"],
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
@@ -22,9 +22,13 @@ const config: Config = {
         "input-bg": "#EFF1F5",
         "dark-input-bg": "#1F2A37",
         "blue-1": "#102A56",
+        "light-yellow": "#E0FE10",
         error: "#F04438",
         success: "#17B268",
-        secondary: "#E0FE10",
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

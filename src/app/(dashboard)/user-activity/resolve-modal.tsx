@@ -48,160 +48,225 @@ const ResolveDisputeModal: React.FC<Props> = ({ onClose }) => {
     }
     
     return (
-        <div className={`fixed inset-0 z-50 flex items-center justify-center ${inter.className} `}>
-            <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center ${inter.className} `}>
+        <div className="absolute inset-0 bg-black bg-opacity-70"></div>
 
-            <div className='relative bg- rounded-lg w-full h-full overflow-y-auto grid justify-items-end'>
-                <div className='w-[582px] rounded-[24px] m-4 p-6 bg-[#EFF1F5] flex flex-col'>
-                    <div className='flex items-center justify-between w-full'>
-                        <p className="font-semibold text-[32px] text-[#101828] ">Dispute Details</p>
-                        <X onClick={() => onClose()} className="cursor-pointer" width={24} />
-                    </div>
-                    <br />
-                    <div className='font-[500] text-[16px] leading-[130%] tracking-[-0.02em] flex flex-col gap-4'>
-                        {section_one && (
-                            <>
-                                <div className='flex gap-2 flex-col'>
-                                    <p className=" text-[#7D89B0]">Title of your Wager</p>
-                                    <p>Will Bitcoin Hit $100k Before January 31, 2025?</p>
-                                </div>
-
-                                <div className='flex gap-2 flex-col'>
-                                    <p className=" text-[#7D89B0]">Terms or Wager Description</p>
-
-                                    <div className=''>
-                                        Think Bitcoin is on track to skyrocket past $100k? Here’s your chance to put your prediction to the test!
-                                        <br />
-                                        This wager challenges participants to predict whether Bitcoin will reach or exceed the $100,000 mark by January 31, 2025.
-                                        <br />
-                                        The official price will be determined using CoinMarketCap’s data at 11:59 PM UTC on the deadline date.
-                                        <br /><br />
-                                        Participants must stake an equal amount of STRK tokens to join this head-to-head challenge.
-                                        <br />
-                                        If Bitcoin hits or surpasses $100k by the specified date and time, those who wager ‘Yes’ win the wager.
-                                        <br />
-                                        If it falls short, those who wager ‘No’ take the prize.
-                                        <br /><br />
-                                        No extensions, no exceptions—this is your chance to back your crypto knowledge with real stakes!
-                                        <br />
-                                        Join now and see if your prediction skills can earn you the ultimate reward in STRK tokens.
-                                        <br />
-                                        Let’s see who’s got what it takes to call the next big crypto move!
-                                    </div>
-                                </div>
-                                <div className='flex gap-2 flex-col'>
-                                    <p className='text-[#7D89B0]'>Participants</p>
-                                    <div className='grid grid-cols-2 gap-4 text-[14px]'>
-                                        {participants.map((participant) => (
-                                            <CardParticipants
-                                                key={participant.walletAddress}
-                                                avatarSrc={participant.avatarSrc}
-                                                username={participant.username}
-                                                walletAddress={participant.walletAddress}
-                                                wagersCreated={participant.wagersCreated}
-                                                wagersJoined={participant.wagersJoined}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className='flex gap-2 flex-col'>
-                                    <p className='text-[#7D89B0]'>Amount Staked</p>
-                                    <div className='flex bg-[#FFFFFF] rounded-full p-2 gap-2 w-fit'>
-                                        <Image width={16} height={16} src={strkLogo} alt="strk logo" />
-
-                                        <p>10 Strk</p>
-                                    </div>
-                                </div>
-                                <div className='flex gap-2 flex-col'>
-                                    <p className='text-[#7D89B0]'>Reason for Dispute</p>
-                                    <p> No proof provided for claim</p>
-                                </div>
-                                <div className='flex gap-2 flex-col'>
-                                    <p className='text-[#7D89B0]'>Category</p>
-                                    <span className='bg-white p-2 w-fit rounded-full'>Crypto</span>
-                                </div>
-                                <div className='flex gap-2 flex-col'>
-                                    <p className='text-[#7D89B0]'>Proof</p>
-                                    <Image width={120} className='rounded-[12px] border' src={avatarOne} alt="proof images" />
-                                </div>
-
-                                <div className='flex flex-row gap-2'>
-                                    <div onClick={() => ContinueToSectionTwo()} className='w-[211px] h-[56px] rounded-[16px] p-3 bg-[#F9F9FB] hover:bg-[#E0FE10] flex items-center justify-center border border-[#DCDFEA] cursor-pointer'>Resolve Dispute</div>
-                                    <div className='w-[211px] h-[56px] rounded-[16px] p-3 flex items-center justify-center border bg-[#F9F9FB] hover:bg-[#E0FE10] border-[#DCDFEA] cursor-pointer'>Request More Info</div>
-                                    <div onClick={() => onClose()} className='w-[80px] h-[56px] rounded-[16px] p-3 flex items-center justify-center border bg-[#F9F9FB] hover:bg-[#E0FE10] border-[#DCDFEA] cursor-pointer'>Close</div>
-                                </div>
-                            </>
-                        )}
-
-                        {section_two && (
-                            <>
-                              <div className='flex gap-2 flex-col'>
-                                    <p className='text-[#7D89B0]'>Participants</p>
-                                    <div className='grid grid-cols-2 gap-4 text-[14px]'>
-                                        {participants.map((participant) => (
-                                            <span 
-                                                key={participant.walletAddress}
-                                                onClick={() => {
-                                                    const selectedWallet = participant.walletAddress;
-                                                    setSelectedParticipant(selectedWallet);
-                                                }}
-                                                className={`cursor-pointer py-1 rounded-[16px] flex justify-center items-center ${
-                                                    selectedParticipant === participant.walletAddress 
-                                                    ? 'bg-[#102A56]' 
-                                                    : ''
-                                                }`}
-                                            >
-                                                {
-                                                     selectedParticipant === participant.walletAddress 
-                                                     ? <Check className='absolute border rounded-full bg-[#102A56] p-[6px] mt-[-200px] ml-[240px]' width={36} height={36} color='white' /> 
-                                                     : ''
-                                                }
-                                                <CardParticipants
-                                                    avatarSrc={participant.avatarSrc}
-                                                    username={participant.username}
-                                                    walletAddress={participant.walletAddress}
-                                                    wagersCreated={participant.wagersCreated}
-                                                    wagersJoined={participant.wagersJoined}
-                                                />
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className='flex gap-2 flex-col'>
-                                    <p>Reason for Resolution (Optional) </p>
-                                    <input id='tell-them-why' type="text" placeholder='Tell them why ?' className='w-full h-[40px] rounded-[12px] py-6 px-3 bg-[#F9F9FB]' />
-                                    <div className="grid justify-items-end w-full">
-                                        <p className="text-[#7D89B0] w-fit text-sm">
-                                            {`0/500`}
-                                            {/* ${document.getElementById('tell-them-why')?.value.length  */}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className='w-full justify-center flex items-center'>
-                                    <button onClick={() => ContinueToSectionThree()} className='w-[343px] h-[56px] rounded-[16px] bg-[#E0FE10]'>Fund Selected Winner</button>
-                                </div>
-                            </>
-                        )}
-
-                        {section_three && (
-                            <>
-                                <div className='w-full justify-center flex flex-col gap-4 items-center'>
-                                    <ConfirmDecision />
-                                    <p className='font-[600] text-[24px]'>Important Disclaimer</p>
-                                    <p className='text-[#4A5578] font-[400] text-[18px] '>Once you close this wager nobody gets the funds.</p>
-                                    <div className='flex gap-2 justify-center items-center'>
-                                        <button onClick={() => onClose()}  className='bg-[#F9F9FB] py-3 px-6 rounded-[16px]'>Cancel</button>
-                                        <button onClick={() => onClose()}  className='bg-[#E0FE10] py-3 px-6 rounded-[16px]'>Close Wager</button>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-
-
-                    </div>
-                </div>
+        <div className="relative bg- rounded-lg w-full h-full overflow-y-auto grid justify-items-end">
+          <div className="w-[582px] rounded-[24px] m-4 p-6 bg-[#EFF1F5] flex flex-col">
+            <div className="flex items-center justify-between w-full">
+              <p className="font-semibold text-[32px] text-[#101828] ">
+                Dispute Details
+              </p>
+              <X
+                onClick={() => onClose()}
+                className="cursor-pointer"
+                width={24}
+              />
             </div>
+            <br />
+            <div className="font-[500] text-[16px] leading-[130%] tracking-[-0.02em] flex flex-col gap-4">
+              {section_one && (
+                <>
+                  <div className="flex gap-2 flex-col">
+                    <p className=" text-[#7D89B0]">Title of your Wager</p>
+                    <p>Will Bitcoin Hit $100k Before January 31, 2025?</p>
+                  </div>
+
+                  <div className="flex gap-2 flex-col">
+                    <p className=" text-[#7D89B0]">
+                      Terms or Wager Description
+                    </p>
+
+                    <div className="">
+                      Think Bitcoin is on track to skyrocket past $100k? Here’s
+                      your chance to put your prediction to the test!
+                      <br />
+                      This wager challenges participants to predict whether
+                      Bitcoin will reach or exceed the $100,000 mark by January
+                      31, 2025.
+                      <br />
+                      The official price will be determined using
+                      CoinMarketCap’s data at 11:59 PM UTC on the deadline date.
+                      <br />
+                      <br />
+                      Participants must stake an equal amount of STRK tokens to
+                      join this head-to-head challenge.
+                      <br />
+                      If Bitcoin hits or surpasses $100k by the specified date
+                      and time, those who wager ‘Yes’ win the wager.
+                      <br />
+                      If it falls short, those who wager ‘No’ take the prize.
+                      <br />
+                      <br />
+                      No extensions, no exceptions—this is your chance to back
+                      your crypto knowledge with real stakes!
+                      <br />
+                      Join now and see if your prediction skills can earn you
+                      the ultimate reward in STRK tokens.
+                      <br />
+                      Let’s see who’s got what it takes to call the next big
+                      crypto move!
+                    </div>
+                  </div>
+                  <div className="flex gap-2 flex-col">
+                    <p className="text-[#7D89B0]">Participants</p>
+                    <div className="grid grid-cols-2 gap-4 text-[14px]">
+                      {participants.map((participant) => (
+                        <CardParticipants
+                          key={participant.walletAddress}
+                          avatarSrc={participant.avatarSrc}
+                          username={participant.username}
+                          walletAddress={participant.walletAddress}
+                          wagersCreated={participant.wagersCreated}
+                          wagersJoined={participant.wagersJoined}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex gap-2 flex-col">
+                    <p className="text-[#7D89B0]">Amount Staked</p>
+                    <div className="flex bg-[#FFFFFF] rounded-full p-2 gap-2 w-fit">
+                      <Image
+                        width={16}
+                        height={16}
+                        src={strkLogo}
+                        alt="strk logo"
+                      />
+
+                      <p>10 Strk</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 flex-col">
+                    <p className="text-[#7D89B0]">Reason for Dispute</p>
+                    <p> No proof provided for claim</p>
+                  </div>
+                  <div className="flex gap-2 flex-col">
+                    <p className="text-[#7D89B0]">Category</p>
+                    <span className="bg-white p-2 w-fit rounded-full">
+                      Crypto
+                    </span>
+                  </div>
+                  <div className="flex gap-2 flex-col">
+                    <p className="text-[#7D89B0]">Proof</p>
+                    <Image
+                      width={120}
+                      className="rounded-[12px] border"
+                      src={avatarOne}
+                      alt="proof images"
+                    />
+                  </div>
+
+                  <div className="flex flex-row gap-2">
+                    <div
+                      onClick={() => ContinueToSectionTwo()}
+                      className="w-[211px] h-[56px] rounded-[16px] p-3 bg-[#F9F9FB] hover:bg-[#E0FE10] flex items-center justify-center border border-[#DCDFEA] cursor-pointer">
+                      Resolve Dispute
+                    </div>
+                    <div className="w-[211px] h-[56px] rounded-[16px] p-3 flex items-center justify-center border bg-[#F9F9FB] hover:bg-[#E0FE10] border-[#DCDFEA] cursor-pointer">
+                      Request More Info
+                    </div>
+                    <div
+                      onClick={() => ContinueToSectionThree()}
+                      className="w-[80px] h-[56px] rounded-[16px] p-3 flex items-center justify-center border bg-[#F9F9FB] hover:bg-[#E0FE10] border-[#DCDFEA] cursor-pointer">
+                      Close
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {section_two && (
+                <>
+                  <div className="flex gap-2 flex-col">
+                    <p className="text-[#7D89B0]">Participants</p>
+                    <div className="grid grid-cols-2 gap-4 text-[14px]">
+                      {participants.map((participant) => (
+                        <span
+                          key={participant.walletAddress}
+                          onClick={() => {
+                            const selectedWallet = participant.walletAddress;
+                            setSelectedParticipant(selectedWallet);
+                          }}
+                          className={`cursor-pointer py-1 rounded-[16px] flex justify-center items-center ${
+                            selectedParticipant === participant.walletAddress
+                              ? "bg-[#102A56]"
+                              : ""
+                          }`}>
+                          {selectedParticipant === participant.walletAddress ? (
+                            <Check
+                              className="absolute border rounded-full bg-[#102A56] p-[6px] mt-[-200px] ml-[240px]"
+                              width={36}
+                              height={36}
+                              color="white"
+                            />
+                          ) : (
+                            ""
+                          )}
+                          <CardParticipants
+                            avatarSrc={participant.avatarSrc}
+                            username={participant.username}
+                            walletAddress={participant.walletAddress}
+                            wagersCreated={participant.wagersCreated}
+                            wagersJoined={participant.wagersJoined}
+                          />
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex gap-2 flex-col">
+                    <p>Reason for Resolution (Optional) </p>
+                    <input
+                      id="tell-them-why"
+                      type="text"
+                      placeholder="Tell them why ?"
+                      className="w-full h-[40px] rounded-[12px] py-6 px-3 bg-[#F9F9FB]"
+                    />
+                    <div className="grid justify-items-end w-full">
+                      <p className="text-[#7D89B0] w-fit text-sm">
+                        {`0/500`}
+                        {/* ${document.getElementById('tell-them-why')?.value.length  */}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-full justify-center flex items-center">
+                    <button
+                      onClick={() => onClose()}
+                      className="w-[343px] h-[56px] rounded-[16px] bg-[#E0FE10]">
+                      Fund Selected Winner
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {section_three && (
+                <>
+                  <div className="w-full justify-center flex flex-col gap-4 items-center">
+                    <ConfirmDecision />
+                    <p className="font-[600] text-[24px]">
+                      Important Disclaimer
+                    </p>
+                    <p className="text-[#4A5578] font-[400] text-[18px] ">
+                      Once you close this wager nobody gets the funds.
+                    </p>
+                    <div className="flex gap-2 justify-center items-center">
+                      <button
+                        onClick={() => onClose()}
+                        className="bg-[#F9F9FB] py-3 px-6 rounded-[16px]">
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => onClose()}
+                        className="bg-[#E0FE10] py-3 px-6 rounded-[16px]">
+                        Close Wager
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
+      </div>
     );
 };
 

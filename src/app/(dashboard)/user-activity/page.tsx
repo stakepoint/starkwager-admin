@@ -6,10 +6,7 @@ import {
   TotalUserIcon,
   TrendIcon,
 } from "../../../../public/icon";
-import { Stack } from "@/components/ui/Stack";
-import { DataTable } from "./data-table";
-import { columns } from "./column";
-import { userActivity } from "@/lib/data/user-activity";
+
 import { UsersDashboard } from "@/components/users/users-dashboard";
 import Card from "@/components/card";
 

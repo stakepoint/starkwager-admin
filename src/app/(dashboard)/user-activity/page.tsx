@@ -1,16 +1,55 @@
-"use client";
 import React from "react";
-import ResolveDisputeModal from "./resolve-modal";
+import {
+  ActiveUserIcon,
+  NewUserIcon,
+  RegressionIcon,
+  TotalUserIcon,
+  TrendIcon,
+} from "../../../../public/icon";
 
-const Page = () => {
-    const [open, setOpen] = React.useState(false);
-    return (
-        <div className="flex flex-col items-center justify-center text-black h-screen">
-            <p className="text-black">This is the main page</p>
-            <button className="bg-[#102A56] px-6 py-3 rounded-[8px]" onClick={() => setOpen(true)}>View Details</button>
-            {open && <ResolveDisputeModal onClose={() => setOpen(false)} /> } 
-        </div>
-    );
+import { UsersDashboard } from "@/components/users/users-dashboard";
+import Card from "@/components/card";
+
+const cardDetails = [
+  {
+    number: "500",
+    title: "Total Users",
+    avatar: <TotalUserIcon />,
+    icon: <TrendIcon />,
+  },
+  {
+    number: "450",
+    title: "Active Users",
+    avatar: <ActiveUserIcon />,
+    icon: <TrendIcon />,
+  },
+  {
+    number: "50",
+    title: "New Users",
+    avatar: <NewUserIcon />,
+    icon: <RegressionIcon />,
+  },
+];
+
+const page = () => {
+  return (
+    <div className="container mx-auto">
+      <div className="flex gap-4 flex-wrap">
+        {cardDetails.map((card, index) => (
+          <Card
+            key={index}
+            number={card.number}
+            title={card.title}
+            avatar={card.avatar}
+            icon={card.icon}
+          />
+        ))}
+      </div>
+      <div className=" py-6">
+        <UsersDashboard />
+      </div>
+    </div>
+  );
 };
 
-export default Page;
+export default page;

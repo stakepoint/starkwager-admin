@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Toaster } from "sonner";
 import "./globals.css";
-import { ThemeProvider } from "@/components/layouts/themeProvider";
+import localFont from "next/font/local";
+import type { Metadata } from "next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -69,29 +67,21 @@ const Comedik = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Starkwager",
-  description: "Welcome to Starkwager",
+  title: "StarkWager Admin",
+  description: "Admin dashboard for StarkWager platform",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${GeneralSans.variable} ${geistMono.variable} ${Schabo.variable} ${SchaboCondensed.variable} ${Comedik.variable} antialiased`}
       >
-        <Toaster />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );

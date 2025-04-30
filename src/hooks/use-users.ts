@@ -135,13 +135,7 @@ const MOCK_USERS: User[] = [
   },
 ];
 
-export function useUsers({
-  search,
-  dateRange,
-  accountStatus,
-  activityLevel,
-  page,
-}: UseUsersProps) {
+export function useUsers({ search, accountStatus, page }: UseUsersProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [totalUsers, setTotalUsers] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -173,6 +167,7 @@ export function useUsers({
       const startIndex = (page - 1) * itemsPerPage;
       const paginatedUsers = filteredUsers.slice(0, itemsPerPage);
 
+      console.log(startIndex);
       setUsers(paginatedUsers);
       setIsLoading(false);
     }, 500);

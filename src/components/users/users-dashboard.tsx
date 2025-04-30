@@ -50,6 +50,8 @@ export function UsersDashboard() {
   };
 
   const handleDownload = () => {
+    console.log(setPage);
+
     console.log("Downloading user data...");
   };
 

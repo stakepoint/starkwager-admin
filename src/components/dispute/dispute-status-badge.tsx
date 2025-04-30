@@ -1,5 +1,5 @@
 interface DisputeStatusBadgeProps {
-  status: any;
+  status: string;
 }
 
 export function DisputeStatusBadge({ status }: DisputeStatusBadgeProps) {

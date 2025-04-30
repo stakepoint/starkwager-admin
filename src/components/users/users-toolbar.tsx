@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarIcon, Download, Search } from "lucide-react";
+import { CalendarIcon, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,8 +33,6 @@ interface UsersToolbarProps {
 }
 
 export function UsersToolbar({
-  search,
-  onSearchChange,
   dateRange,
   onDateRangeChange,
   accountStatus,
